@@ -19,18 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----------------------------------------------------------------------------
-
-Parts of custom_components/robot360/lib360 are ported from these MIT-licensed
-projects. Their notices:
-
-ioBroker.botslab360 (login flow, push channel)
-  Copyright (c) 2022 TA2k <tombox2020@gmail.com>
-  https://github.com/TA2k/ioBroker.botslab360
-
-ha-360-vacuum (command payloads)
-  Copyright (c) 2025 juetthei
-  https://github.com/juetthei/ha-360-vacuum
-
-Both are distributed under the MIT License, with the same terms as above.
