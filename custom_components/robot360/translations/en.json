@@ -56,14 +56,14 @@
       "filter_hours": {
         "name": "Filter operating time"
       },
-      "mainBrush_hours": {
-        "name": "Main brush operating time"
-      },
-      "sideBrush_hours": {
-        "name": "Side brush operating time"
-      },
       "sensors_hours": {
         "name": "Sensors operating time"
+      },
+      "main_brush_hours": {
+        "name": "Main brush operating time"
+      },
+      "side_brush_hours": {
+        "name": "Side brush operating time"
       }
     },
     "number": {

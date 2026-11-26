@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
@@ -19,6 +21,10 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from .coordinator import Robot360ConfigEntry, Robot360Coordinator, RobotState
 from .entity import Robot360Entity
 from .lib360 import status as st
+
+
+def _snake(name: str) -> str:
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -62,7 +68,8 @@ SENSORS: tuple[Robot360SensorDescription, ...] = (
     *(
         Robot360SensorDescription(
             key=f"{part}_hours",
-            translation_key=f"{part}_hours",
+            # unique_id keeps the camelCase key; translation keys must be snake_case.
+            translation_key=f"{_snake(part)}_hours",
             device_class=SensorDeviceClass.DURATION,
             native_unit_of_measurement=UnitOfTime.HOURS,
             state_class=SensorStateClass.TOTAL_INCREASING,
