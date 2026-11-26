@@ -1,0 +1,11 @@
+{
+  "domain": "robot360",
+  "name": "360 Robot Vacuum",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "iot_class": "cloud_push",
+  "loggers": ["custom_components.robot360"],
+  "requirements": [],
+  "version": "0.1.0"
+}

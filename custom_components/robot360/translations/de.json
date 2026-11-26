@@ -1,0 +1,75 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "360Robot-Konto",
+        "description": "Melde dich so an wie in der 360Robot-App: mit E-Mail-Adresse oder Handynummer (z. B. +4917…) und Passwort. Alle Roboter des Kontos werden angelegt.",
+        "data": {
+          "username": "E-Mail oder Handynummer",
+          "password": "Passwort"
+        }
+      },
+      "captcha": {
+        "title": "Captcha",
+        "description": "360 verlangt vor der Anmeldung ein Captcha. Gib die Zeichen aus dem Bild ein.\n\n{captcha}",
+        "data": {
+          "captcha": "Captcha"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneut anmelden",
+        "description": "Die 360-Anmeldung für {username} funktioniert nicht mehr. Gib das Passwort noch einmal ein.",
+        "data": {
+          "password": "Passwort"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "E-Mail oder Passwort falsch, oder das Konto gehört nicht zur 360Robot-App.",
+      "cannot_connect": "Die 360-Server sind nicht erreichbar.",
+      "no_devices": "Anmeldung hat geklappt, aber im Konto sind keine Roboter.",
+      "captcha_wrong": "Captcha war falsch. Versuch es mit dem neuen."
+    },
+    "abort": {
+      "already_configured": "Dieses Konto ist schon eingerichtet.",
+      "reauth_successful": "Anmeldung erneuert.",
+      "wrong_account": "Das ist ein anderes 360-Konto als vorher."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "mode": {
+        "name": "Status"
+      },
+      "error": {
+        "name": "Fehlercode"
+      },
+      "last_status": {
+        "name": "Letzte Statusmeldung"
+      },
+      "clean_area": {
+        "name": "Gereinigte Fläche"
+      },
+      "clean_time": {
+        "name": "Reinigungsdauer"
+      },
+      "filter_hours": {
+        "name": "Filter Laufzeit"
+      },
+      "mainBrush_hours": {
+        "name": "Hauptbürste Laufzeit"
+      },
+      "sideBrush_hours": {
+        "name": "Seitenbürste Laufzeit"
+      },
+      "sensors_hours": {
+        "name": "Sensoren Laufzeit"
+      }
+    },
+    "number": {
+      "volume": {
+        "name": "Lautstärke"
+      }
+    }
+  }
+}
