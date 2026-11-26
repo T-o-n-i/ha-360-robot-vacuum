@@ -40,7 +40,6 @@ async def async_setup_entry(
 
 class Robot360Vacuum(Robot360Entity, StateVacuumEntity):
     _attr_name = None
-    _attr_translation_key = "robot"
     _attr_fan_speed_list = st.FAN_SPEEDS
     _attr_supported_features = (
         VacuumEntityFeature.START

@@ -1,11 +1,18 @@
 {
   "domain": "robot360",
   "name": "360 Robot Vacuum",
-  "codeowners": [],
+  "codeowners": [
+    "@T-o-n-i"
+  ],
   "config_flow": true,
   "dependencies": [],
+  "documentation": "https://github.com/T-o-n-i/ha-360-robot-vacuum",
+  "integration_type": "hub",
   "iot_class": "cloud_push",
-  "loggers": ["custom_components.robot360"],
+  "issue_tracker": "https://github.com/T-o-n-i/ha-360-robot-vacuum/issues",
+  "loggers": [
+    "custom_components.robot360"
+  ],
   "requirements": [],
-  "version": "0.1.0"
+  "version": "1.0.0"
 }

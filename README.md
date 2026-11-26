@@ -1,59 +1,85 @@
-# 360 Robot Vacuum für Home Assistant
+# 360 Robot Vacuum
 
-Custom Integration für Saugroboter von Qihoo 360, die mit der App **360Robot** gesteuert werden
-(Cloud `q.smart.360.cn`). Geschrieben für den **360 S6**; andere Modelle derselben App sollten
-ähnlich funktionieren.
+Home Assistant integration for Qihoo 360 robot vacuums that are controlled with the **360Robot** app (cloud `q.smart.360.cn`). Built and tested with two **360 S6**; other robots from the same app probably work too.
 
-## Was sie kann
+You sign in with the same account as in the app. All robots on the account show up as devices, and their state comes in live from the 360 cloud.
 
-- Anmeldung wie in der 360Robot-App (E-Mail oder Handynummer, Passwort). Die Sitzung wird automatisch erneuert.
-- Alle Roboter des Kontos werden als eigene Geräte angelegt.
-- Status kommt live über den Push-Kanal der 360-Cloud, zusätzlich wird jede Minute abgefragt.
-- Pro Roboter:
-  - `vacuum.*`: Start, Pause, Stopp (= Pause), zurück zur Station, Saugstärke (`quiet`, `auto`, `strong`), Orten
-  - Sensoren: Akku, Status (Rohstatus als Attribute), Fehlercode, gereinigte Fläche, Reinigungsdauer, letzte Statusmeldung
-  - Diagnose-Sensoren: Laufzeit von Filter, Haupt- und Seitenbürste und Sensoren in Stunden (stündlich abgefragt)
-  - Schieberegler für die Lautstärke (0–10)
-- `vacuum.send_command` für alles andere. `command` ist der infoType, `params` die Daten, z. B. Lautstärke:
+## What you get
 
-  ```yaml
-  action: vacuum.send_command
-  target:
-    entity_id: vacuum.erdgeschoss
-  data:
-    command: "21024"
-    params: { cmd: setVolume, value: 5 }
-  ```
+Per robot:
+
+- **Vacuum**: start, pause, stop, return to dock, locate, fan speed (`quiet`, `auto`, `strong`). Start on a paused robot resumes the run.
+- **Sensors**: battery, status (the raw mode, with the full status as attributes), error code, cleaned area, cleaning time, time of the last status update.
+- **Diagnostic sensors**: operating hours of filter, main brush, side brush and sensors since they were last reset (asked for once an hour).
+- **Volume** of the voice prompts as a slider (0–10).
+- **Diagnostics download** with the device list and the last raw messages from each robot.
 
 ## Installation
 
-1. Ordner `custom_components/robot360` nach `/config/custom_components/robot360` kopieren
-   (Samba, SSH oder File-Editor). Alternativ das Repo als benutzerdefiniertes HACS-Repository eintragen.
-2. Home Assistant neu starten.
-3. *Einstellungen → Geräte & Dienste → Integration hinzufügen → „360 Robot Vacuum“*, E-Mail und Passwort eingeben.
+Install it from the Marketplace (*Settings → Marketplace*, search for *360 Robot Vacuum*), or open it there directly:
 
-Verlangt 360 ein Captcha, zeigt der Dialog das Bild an.
+[![Open in the Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=T-o-n-i&repository=ha-360-robot-vacuum&category=integration)
 
-## Testlauf ohne Home Assistant
+Restart Home Assistant afterwards.
+
+<!-- ha-marketplace:exclude-start -->
+### Manual
+
+Copy `custom_components/robot360` to `/config/custom_components/robot360` and restart Home Assistant.
+<!-- ha-marketplace:exclude-end -->
+
+## Setup
+
+1. *Settings → Devices & services → Add integration → 360 Robot Vacuum*.
+2. Enter the login you use in the 360Robot app: e-mail address or mobile number with country code (e.g. `+4917…`), and the password.
+3. 360 usually asks for a picture captcha. The dialog shows it; type the characters.
+
+That is the only time you need the password and the captcha. The integration keeps the account login (like the app does) and uses it for every restart and every new cloud session. Only if 360 stops accepting it, Home Assistant asks you to sign in again.
+
+## Sending other commands
+
+`vacuum.send_command` sends any command the 360 cloud knows. `command` is the info type, `params` the data. Example, set the volume to 5:
+
+```yaml
+action: vacuum.send_command
+target:
+  entity_id: vacuum.living_room
+data:
+  command: "21024"
+  params:
+    cmd: setVolume
+    value: 5
+```
+
+## Status values
+
+What a 360 S6 (firmware 2.10.10) reports:
+
+| Mode (`sensor.*_status`) | Vacuum state |
+| --- | --- |
+| `sweep` | cleaning |
+| `backcharge` | returning |
+| `charge`, `fullcharge` | docked |
+
+Further mode names (`pause`, `idle`, `spotClean`, …) come from other projects and are not confirmed on an S6 yet. Unknown names are guessed from the word (`…clean…` is cleaning, `back…` is returning). The exact value is always in the status sensor. If you see a mode that ends up wrong, please open an issue with it.
+
+## Limits
+
+- Cloud only. Without internet, or if 360 changes its API, the integration stops working.
+- No map, no room or zone cleaning.
+- Consumables are reported as operating hours. The cloud does not say how many hours a part is meant to last.
+
+## Testing without Home Assistant
+
+`tools/probe.py` signs in, lists the robots, asks for status and consumables and writes the answers (without password and session keys) to `tools/probe_output.json`. Handy to check a new model before installing.
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install aiohttp cryptography
 .venv/bin/python tools/probe.py
 ```
 
-Das Skript meldet sich an, listet die Roboter, fragt Status und Verbrauchsmaterial ab und schreibt das Ergebnis
-ohne Passwort und Sitzungsschlüssel nach `tools/probe_output.json`. Mit `-v` gibt es ausführliche Logs.
+## Credits
 
-## Bekannte Grenzen
+The login and the push channel are ported from [TA2k/ioBroker.botslab360](https://github.com/TA2k/ioBroker.botslab360), the command payloads come from [juetthei/ha-360-vacuum](https://github.com/juetthei/ha-360-vacuum) (both MIT). The frame layout of the push channel was worked out with the help of [cavefire/cn360-proxy](https://github.com/cavefire/cn360-proxy).
 
-- Die Feldnamen sind an einer S6 mit Firmware 2.10.10 geprüft. Bisher gesehen hat die Integration nur den Modus `fullcharge`. Die anderen Modi (Saugen, Rückfahrt, Pause) stammen aus juetthei/ha-360-vacuum. Unbekannte Modi stehen trotzdem im Status-Sensor.
-- Die Laufzeiten sind die Betriebsstunden seit dem letzten Zurücksetzen. Wie viele Stunden ein Filter laut 360 hält, liefert die Cloud nicht mit.
-- Nur Cloud. Ohne Internet oder bei Änderungen an der 360-API funktioniert nichts mehr.
-- Keine Karte, keine Raum- oder Zonenreinigung.
-
-## Herkunft
-
-Login-Ablauf und Push-Kanal sind aus [TA2k/ioBroker.botslab360](https://github.com/TA2k/ioBroker.botslab360) (MIT)
-nach Python übertragen, die Befehle stammen aus [juetthei/ha-360-vacuum](https://github.com/juetthei/ha-360-vacuum) (MIT),
-das Frame-Format aus [cavefire/cn360-proxy](https://github.com/cavefire/cn360-proxy).
-Kein offizielles Produkt von Qihoo 360.
+Not affiliated with or endorsed by Qihoo 360.

@@ -1,5 +1,4 @@
 {
   "name": "360 Robot Vacuum",
-  "homeassistant": "2025.1.0",
-  "render_readme": true
+  "homeassistant": "2025.2.0"
 }
