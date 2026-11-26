@@ -80,6 +80,6 @@ python3 -m venv .venv && .venv/bin/pip install aiohttp cryptography
 
 ## Credits
 
-The login and the push channel are ported from [TA2k/ioBroker.botslab360](https://github.com/TA2k/ioBroker.botslab360), the command payloads come from [juetthei/ha-360-vacuum](https://github.com/juetthei/ha-360-vacuum) (both MIT). The frame layout of the push channel was worked out with the help of [cavefire/cn360-proxy](https://github.com/cavefire/cn360-proxy).
+The login and the push channel are ported from [TA2k/ioBroker.botslab360](https://github.com/TA2k/ioBroker.botslab360), the command payloads come from [juetthei/ha-360-vacuum](https://github.com/juetthei/ha-360-vacuum) (both MIT, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)). The frame layout of the push channel was worked out with the help of [cavefire/cn360-proxy](https://github.com/cavefire/cn360-proxy).
 
 Not affiliated with or endorsed by Qihoo 360.
