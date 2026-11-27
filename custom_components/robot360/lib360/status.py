@@ -102,6 +102,8 @@ def error_code(status: dict[str, Any]) -> str | None:
     value = found[1]
     if isinstance(value, list | tuple):
         codes = [str(v.get("code", v) if isinstance(v, dict) else v) for v in value]
+        # S10 sends [0] when there is no error.
+        codes = [c for c in codes if c not in ("0", "", "null")]
         return ", ".join(codes) or None
     return None if str(value) in ("0", "", "null") else str(value)
 
