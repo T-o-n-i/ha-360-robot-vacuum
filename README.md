@@ -16,9 +16,17 @@ Per robot:
 
 ## Installation
 
-Install it from the Marketplace (*Settings → Marketplace*, search for *360 Robot Vacuum*), or open it there directly:
+The integration is not in the Marketplace catalog, so searching for it there finds nothing. Add this repository to the Marketplace yourself; after that it installs and updates like any other integration.
+
+The quickest way is this button. It opens the repository in your Marketplace:
 
 [![Open in the Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=T-o-n-i&repository=ha-360-robot-vacuum&category=integration)
+
+Or by hand:
+
+1. *Settings → Marketplace*, menu (⋮) in the top right → *Custom repositories*.
+2. Repository `https://github.com/T-o-n-i/ha-360-robot-vacuum`, type *Integration*, *Add*.
+3. Open *360 Robot Vacuum* and install it.
 
 Restart Home Assistant afterwards.
 
