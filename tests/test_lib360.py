@@ -138,3 +138,11 @@ def test_s6_modes_seen_live() -> None:
     ]
     assert st.activity({"mode": "edgeSweep"}) == "cleaning"
     assert st.activity({"mode": "somethingNew"}) is None
+
+
+def test_error_state_zero_means_no_error() -> None:
+    # 360 S10 reports errorState [0] while docked without a fault.
+    assert st.error_code({"mode": "charge", "errorState": [0]}) is None
+    assert st.error_code({"errorState": []}) is None
+    assert st.error_code({"errorState": [0, 105]}) == "105"
+    assert st.error_code({"errorState": [{"code": 3}]}) == "3"
